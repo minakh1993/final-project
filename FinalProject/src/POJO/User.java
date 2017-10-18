@@ -20,7 +20,7 @@ public class User implements Serializable{
 	@Column(name="username", nullable=false , length=20)
 	private String username;
 	
-	@Column(name="password", nullable=false, length=20)
+	@Column(name="password", nullable=false, length=100)
 	private String password;
 	
 	@Column(name="name", nullable=false , length=30)
