@@ -8,15 +8,16 @@ import java.net.URL;
 
 import POJO.User;
 import WindowClient.JsonHandler;
+import WindowClient.UserManager;
 
 public class SignInRequestResponseManager extends RequestResponseSetting {
 
 	private String loginPath = "";
 
-	public void logIn(String IP, User user) {
+	public void SignIn(String IP, User user) {
 		try {
 
-			HttpURLConnection conn = connectionProperties();
+			HttpURLConnection conn = connectionProperties(IP);
 			if (conn == null) {
 				return;
 			}
@@ -30,7 +31,7 @@ public class SignInRequestResponseManager extends RequestResponseSetting {
 			os.write(requestBody.getBytes());
 			os.flush();
 
-			if (conn.getResponseCode() != 200) {
+			if (conn.getResponseCode() < 200 && conn.getResponseCode()>=300) {
 				System.out.println(conn.getResponseCode());
 				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
 			}
@@ -38,11 +39,15 @@ public class SignInRequestResponseManager extends RequestResponseSetting {
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
 			String output;
+			String result="";
 
 			System.out.println("Output from Server .... \n");
 			while ((output = br.readLine()) != null) {
 				System.out.println(output);
+				result+=output;
 			}
+			//informing user Manager
+			informUserManager(result);
 
 			conn.disconnect();
 
@@ -53,7 +58,22 @@ public class SignInRequestResponseManager extends RequestResponseSetting {
 
 	}
 
-	private HttpURLConnection connectionProperties() {
+	private void informUserManager(String output) {
+		
+		//changing String to Object
+		System.out.println(output);
+		JsonHandler jsonHandler=new JsonHandler();
+		User user=(User) jsonHandler.createObject(output, User.class);
+		
+		//informing the userManager of this client
+		UserManager.signIn(user);
+		
+		
+		
+		
+	}
+
+	private HttpURLConnection connectionProperties(String IP) {
 		super.IP = IP;
 
 		try {

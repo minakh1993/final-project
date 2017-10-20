@@ -20,13 +20,17 @@ public class UserEntityManager {
 		User validatedUser=null;
 
 		try{
+			System.out.println(user.getPassword());
 			validatedUser = session.get(User.class, user.getUsername());
+			System.out.println(validatedUser.getPassword());
 			//checking the password
 			SecurityMD5 secure=new SecurityMD5();
+			System.out.println(secure.md5(user.getPassword()));
 			if(validatedUser.getPassword().equals(secure.md5(user.getPassword()))){
 				//means the username and password is right
 				return validatedUser;
 			}else{
+				
 				return null;
 			}
 

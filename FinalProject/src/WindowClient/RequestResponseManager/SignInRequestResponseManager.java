@@ -9,18 +9,19 @@ import java.net.URL;
 import POJO.User;
 import WindowClient.JsonHandler;
 
-public class SignUpRequestResponseManager extends RequestResponseSetting {
+public class SignInRequestResponseManager extends RequestResponseSetting {
 
-	private String signUpPath = "/signUp";
+	private String loginPath = "";
 
-	public boolean SignUp(String IP, User user) {
-		HttpURLConnection conn=null;
-
-		super.IP = IP;
+	public void logIn(String IP, User user) {
 		try {
-			URL url = new URL(constant + super.IP + ":" + port + "/" + sharedPath + signUpPath);
-			System.out.println(url);
-			conn = connectionProperties();
+
+			HttpURLConnection conn = connectionProperties();
+			if (conn == null) {
+				return;
+			}
+
+			// changing user to json type
 			JsonHandler j = new JsonHandler();
 			String requestBody = j.createJson(user);
 			System.out.println(requestBody);
@@ -37,37 +38,26 @@ public class SignUpRequestResponseManager extends RequestResponseSetting {
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
 			String output;
-			String result="";
 
 			System.out.println("Output from Server .... \n");
 			while ((output = br.readLine()) != null) {
 				System.out.println(output);
-				result+=output;
 			}
-			System.out.println(result);
-			if(result.equals("success")){
-				return true;
-			}else{
-				return false;
-			}
-			
-			
+
+			conn.disconnect();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
-		}finally{
-			conn.disconnect();
 		}
-		return false;
-	
+
 	}
 
 	private HttpURLConnection connectionProperties() {
 		super.IP = IP;
 
 		try {
-			URL url = new URL(constant + super.IP + ":" + port + "/" + sharedPath + signUpPath);
+			URL url = new URL(constant + super.IP + ":" + port + "/" + sharedPath + loginPath);
 			System.out.println(url);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 

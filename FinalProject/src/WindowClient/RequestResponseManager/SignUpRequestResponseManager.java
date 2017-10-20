@@ -13,14 +13,13 @@ public class SignUpRequestResponseManager extends RequestResponseSetting {
 
 	private String signUpPath = "/signUp";
 
-	public boolean SignUp(String IP, User user) {
-		HttpURLConnection conn=null;
+	public void SignUp(String IP, User user) {
 
 		super.IP = IP;
 		try {
 			URL url = new URL(constant + super.IP + ":" + port + "/" + sharedPath + signUpPath);
 			System.out.println(url);
-			conn = connectionProperties();
+			HttpURLConnection conn = connectionProperties();
 			JsonHandler j = new JsonHandler();
 			String requestBody = j.createJson(user);
 			System.out.println(requestBody);
@@ -37,30 +36,18 @@ public class SignUpRequestResponseManager extends RequestResponseSetting {
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
 			String output;
-			String result="";
 
 			System.out.println("Output from Server .... \n");
 			while ((output = br.readLine()) != null) {
 				System.out.println(output);
-				result+=output;
 			}
-			System.out.println(result);
-			if(result.equals("success")){
-				return true;
-			}else{
-				return false;
-			}
-			
-			
+
+			conn.disconnect();
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			conn.disconnect();
 		}
-		return false;
-	
 	}
 
 	private HttpURLConnection connectionProperties() {

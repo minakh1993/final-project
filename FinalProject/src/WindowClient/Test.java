@@ -14,7 +14,7 @@ public class Test {
 		user.setUsername("haleh");
 		user.setPassword("0356");
 		
-		rrh.logIn("localhost", user);
+		rrh.SignIn("localhost", user);
 		
 		
 		SignUpRequestResponseManager srr=new SignUpRequestResponseManager();

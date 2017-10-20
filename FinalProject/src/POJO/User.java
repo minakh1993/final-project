@@ -5,11 +5,10 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import Security.SecurityMD5;
 
 @Entity
 @Table(name="user")
@@ -40,9 +39,7 @@ public class User implements Serializable{
 
 		this.username = username;
 
-		SecurityMD5 secure=new SecurityMD5();
-		//secure the password
-		this.password =secure.md5(password);
+		this.password =password;
 		this.name = name;
 		this.family = family;
 
