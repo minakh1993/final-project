@@ -13,14 +13,15 @@ import javax.persistence.Table;
 @Table(name = "phoneBook")
 public class PhoneRecord implements Serializable {
 
+	
 	@EmbeddedId
 	ID id;
 
 	@Column(name = "mobile", length = 20)
-	private int mobileNumber;
+	private String mobileNumber;
 
 	@Column(name = "phoneNumber", length = 20)
-	private int phoneNumber;
+	private String phoneNumber;
 
 	@Column(name = "email", length = 30)
 	private String Email;
@@ -29,7 +30,7 @@ public class PhoneRecord implements Serializable {
 	
 	
 
-	public PhoneRecord(ID id, int mobileNumber, int phoneNumber, String email) {
+	public PhoneRecord(ID id, String mobileNumber, String phoneNumber, String email) {
 		super();
 		this.id = new ID(id.name, id.family);
 		this.mobileNumber = mobileNumber;
@@ -49,19 +50,19 @@ public class PhoneRecord implements Serializable {
 		this.id = id;
 	}
 
-	public int getMobileNumber() {
+	public String getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(int mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -90,6 +91,23 @@ public class PhoneRecord implements Serializable {
 
 		public ID() {
 			super();
+		}
+		
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getFamily() {
+			return family;
+		}
+
+		public void setFamily(String family) {
+			this.family = family;
 		}
 
 		@Override

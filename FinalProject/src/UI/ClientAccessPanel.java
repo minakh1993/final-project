@@ -6,6 +6,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JRadioButton;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ClientAccessPanel extends JFrame {
 
@@ -29,11 +34,44 @@ public class ClientAccessPanel extends JFrame {
 	private ClientAccessPanel() {
 		setTitle("client Access Panel");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1001, 649);
+		setBounds(100, 100, 743, 802);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JRadioButton rdbtnAddAContact = new JRadioButton("Add Contact");
+		rdbtnAddAContact.setFont(new Font("Times New Roman", Font.PLAIN, 32));
+		rdbtnAddAContact.setBounds(189, 99, 251, 41);
+		contentPane.add(rdbtnAddAContact);
+		
+		JRadioButton rdbtnShowAllContacts = new JRadioButton("show All Contacts");
+		rdbtnShowAllContacts.setFont(new Font("Times New Roman", Font.PLAIN, 32));
+		rdbtnShowAllContacts.setBounds(189, 188, 251, 41);
+		contentPane.add(rdbtnShowAllContacts);
+		
+		JRadioButton rdbtnEditContacts = new JRadioButton("Edit Contacts");
+		rdbtnEditContacts.setFont(new Font("Times New Roman", Font.PLAIN, 32));
+		rdbtnEditContacts.setBounds(189, 279, 251, 41);
+		contentPane.add(rdbtnEditContacts);
+		
+		JRadioButton rdbtnUsersActivities = new JRadioButton("Users Activities");
+		rdbtnUsersActivities.setFont(new Font("Times New Roman", Font.PLAIN, 32));
+		rdbtnUsersActivities.setBounds(189, 368, 251, 41);
+		contentPane.add(rdbtnUsersActivities);
+		
+		JRadioButton rdbtnUserManagement = new JRadioButton("User Management");
+		rdbtnUserManagement.setFont(new Font("Times New Roman", Font.PLAIN, 32));
+		rdbtnUserManagement.setBounds(189, 454, 281, 41);
+		contentPane.add(rdbtnUserManagement);
+		
+		JButton btnSelect = new JButton("select");
+		btnSelect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnSelect.setFont(new Font("Times New Roman", Font.PLAIN, 32));
+		btnSelect.setBounds(431, 569, 171, 41);
+		contentPane.add(btnSelect);
 	}
-
 }
