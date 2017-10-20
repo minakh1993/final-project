@@ -14,38 +14,42 @@ import Security.SecurityMD5;
 @Entity
 @Table(name="user")
 public class User implements Serializable{
-	
+
 
 	@Id
 	@Column(name="username", nullable=false , length=20)
 	private String username;
-	
+
 	@Column(name="password", nullable=false, length=100)
 	private String password;
-	
+
 	@Column(name="name", nullable=false , length=30)
 	private String name;
-	
+
 	@Column(name="family", nullable=false, length=50)
 	private String family;
-	
+
 	@Column(name="role", nullable=false, length=50)
 	private String role="user";
-	
+
 	@Column(name="accessLevel", nullable=false, length=4)
 	private int accessLevel=3; //default value
 
 	public User(String username, String password, String name, String family, String role, int accessLevel) {
-		super();
+
+
 		this.username = username;
-		
+
 		SecurityMD5 secure=new SecurityMD5();
 		//secure the password
 		this.password =secure.md5(password);
 		this.name = name;
 		this.family = family;
-		this.role = role;
-		this.accessLevel = accessLevel;
+
+		if(!role.equals(""))
+			this.role = role;
+		if(accessLevel!=0)
+			this.accessLevel = accessLevel;
 	}
 
 	public User() {
@@ -99,7 +103,7 @@ public class User implements Serializable{
 	public void setAccessLevel(int accessLevel) {
 		this.accessLevel = accessLevel;
 	}
-	
-	
-	
+
+
+
 }

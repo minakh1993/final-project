@@ -7,7 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import EntityManager.UserManager;
+import EntityManager.UserEntityManager;
 import POJO.User;
 
 @Path("/user")
@@ -21,7 +21,7 @@ public class RESTServer {
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
 		public User loginValidation(User user){
-			UserManager userManager=new UserManager();
+			UserEntityManager userManager=new UserEntityManager();
 			User validatedUser=userManager.userValidation(user);
 			if(validatedUser==null){
 				//wrong user or pass
@@ -37,7 +37,7 @@ public class RESTServer {
 		@POST
 		@Consumes(MediaType.APPLICATION_JSON)
 		public Response signup(User user){
-			UserManager userManager=new UserManager();
+			UserEntityManager userManager=new UserEntityManager();
 			boolean status=userManager.userSignUp(user);
 			if(status){
 				return Response.status(200).entity("success").build();
