@@ -1,11 +1,12 @@
 package EntityManager;
 
 import org.hibernate.SessionFactory;
+import POJO.*;
 
 import com.google.gson.Gson;
 
 import POJO.PhoneRecord;
-import POJO.PhoneRecord.ID;
+
 import POJO.User;
 import WindowClient.JsonHandler;
 
@@ -20,7 +21,7 @@ public class Test {
 		
 		PhoneRecord p=new PhoneRecord();
 		
-		ID id=p.new ID("mina", "alavi");
+		ID id=new ID("mina", "alavi");
 		
 		p.setEmail("mina@gmail");
 		p.setId(id);

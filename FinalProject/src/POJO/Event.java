@@ -20,7 +20,7 @@ public class Event implements Serializable{
 	private int code;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "user", insertable = false)
+	@JoinColumn(name = "user")
 	private User user;
 	
 	@Column(name="description")

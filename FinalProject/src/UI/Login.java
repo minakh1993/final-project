@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import POJO.User;
+import RequestResponseManager.RequestResponseSetting;
 import RequestResponseManager.SignInRequestResponseManager;
 import WindowClient.UserManager;
 
@@ -128,6 +129,16 @@ public class Login extends JFrame {
 		contentPane.add(btnSignUp);
 		
 		JButton btnEnterAsGuest = new JButton("Enter as guest");
+		btnEnterAsGuest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RequestResponseSetting rrs=new RequestResponseSetting();
+				rrs.setIP(IPTextField.getText());
+				// int 1 shows this client is a guest
+				new ShowAllContacts(1).setVisible(true);
+				dispose();				
+				
+			}
+		});
 		btnEnterAsGuest.setFont(new Font("Times New Roman", Font.PLAIN, 32));
 		btnEnterAsGuest.setBounds(453, 500, 207, 41);
 		contentPane.add(btnEnterAsGuest);

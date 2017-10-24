@@ -1,5 +1,7 @@
 package EntityManager;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -23,10 +25,10 @@ public class UserEntityManager {
 		try {
 			System.out.println(user.getPassword());
 			validatedUser = session.get(User.class, user.getUsername());
-			
+
 			// checking the password
 			SecurityMD5 secure = new SecurityMD5();
-			
+
 			if (validatedUser.getPassword().equals(secure.md5(user.getPassword()))) {
 				// means the username and password is right
 				return validatedUser;
@@ -72,6 +74,56 @@ public class UserEntityManager {
 
 	}
 
+	public List<User> showAllUsers() {
+
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+
+		List<User> list = session.createQuery("from User", User.class).list();
+		t.commit();
+
+		session.close();
+		return list;
+
+	}
+
+	public boolean updateUser(User user) {
+
+		Session session = factory.openSession();
+		try {
+			Transaction t = session.beginTransaction();
+			session.update(user);
+			t.commit();
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			session.close();
+		}
+
+	}
 	
+	public boolean deleteUser(String username){
+		
+		User user=new User(); user.setUsername(username);
+		
+		Session session = factory.openSession();
+		try {
+			Transaction t = session.beginTransaction();
+			session.delete(user);
+			t.commit();
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			session.close();
+		}
+		
+		
+	}
 
 }
