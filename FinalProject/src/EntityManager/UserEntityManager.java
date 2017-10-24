@@ -60,6 +60,7 @@ public class UserEntityManager {
 			SecurityMD5 secure = new SecurityMD5();
 			String pass = user.getPassword();
 			String md5Pass = secure.md5(pass);
+			System.out.println(md5Pass);
 			// making a new user
 			User finalUser = new User(user.getUsername(), md5Pass, user.getName(), user.getFamily(), user.getRole(),
 					user.getAccessLevel());
@@ -107,7 +108,7 @@ public class UserEntityManager {
 	
 	public boolean deleteUser(String username){
 		
-		User user=new User(); user.setUsername(username);
+		User user=new User(username," "," "," "," ",1);
 		
 		Session session = factory.openSession();
 		try {

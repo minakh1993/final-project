@@ -24,6 +24,7 @@ import EntityManager.UserEntityManager;
 import POJO.ID;
 import POJO.PhoneRecord;
 import POJO.User;
+import Security.SecurityMD5;
 import WindowClient.JsonHandler;
 
 @Path("/user")
@@ -75,7 +76,8 @@ public class RESTServer {
 		UserEntityManager userManager = new UserEntityManager();
 		boolean status = userManager.userSignUp(user);
 		if (status) {
-
+   
+			user.setPassword(new SecurityMD5().md5(user.getPassword()));
 			EventDescriptionBuilder description = new EventDescriptionBuilder("signed up successfully", ip, "sign Up");
 			new EventEntityManager().saveEvent(description.toString(), user);
 			return Response.status(200).entity("success").build();
@@ -134,11 +136,18 @@ public class RESTServer {
 	public List<PhoneRecord> showAllContacts(@Context HttpServletRequest request) {
 
 		String ip = request.getRemoteAddr();
+		User user;
+		if(onlineUsers.containsKey(ip)){
+			user=onlineUsers.get(ip);
+		}else{
+			user=guest;
+		}
+		
 		System.out.println("showint all contacts");
 		PhoneNumberEntityManager entityManager = new PhoneNumberEntityManager();
 
 		EventDescriptionBuilder description = new EventDescriptionBuilder("show all contacts", ip, "show all contacts");
-		new EventEntityManager().saveEvent(description.toString(), guest);
+		new EventEntityManager().saveEvent(description.toString(), user);
 
 		return entityManager.showAllContacts();
 	}
@@ -200,7 +209,7 @@ public class RESTServer {
 			new EventEntityManager().saveEvent(description.toString(), guest);
 			return Response.status(405).entity("Access denied").build();
 
-		} else if (user.getAccessLevel() >= 2) {
+		} else if (user.getAccessLevel() <= 2) {
 			
 			PhoneNumberEntityManager entityManager = new PhoneNumberEntityManager();
 			boolean status = entityManager.updateContact(phoneRecord);
@@ -243,7 +252,7 @@ public class RESTServer {
 					"show all users  ");
 			new EventEntityManager().saveEvent(description.toString(), guest);
 			return null;
-		} else if (user.getAccessLevel() == 3) {
+		} else if (user.getAccessLevel() == 1) {
 
 			EventDescriptionBuilder description = new EventDescriptionBuilder(" showed all users successfully ", ip,
 					"show all users  ");
@@ -277,7 +286,7 @@ public class RESTServer {
 			
 			return Response.status(405).entity("Access denied").build();
 
-		} else if (client.getAccessLevel() == 3) {
+		} else if (client.getAccessLevel() == 1) {
 			UserEntityManager entityManager = new UserEntityManager();
 			boolean status = entityManager.updateUser(user);
 			if (status) {
@@ -315,13 +324,13 @@ public class RESTServer {
 		User user = onlineUsers.get(ip);
 		if (user == null) {
 			
-			EventDescriptionBuilder description = new EventDescriptionBuilder(" Attecker ", ip,
+			EventDescriptionBuilder description = new EventDescriptionBuilder(" Attacker ", ip,
 					"Delete user "+username);
 			new EventEntityManager().saveEvent(description.toString(), guest);
 			
 			return Response.status(405).entity("Access denied").build();
 
-		} else if (user.getAccessLevel() == 3) {
+		} else if (user.getAccessLevel() == 1) {
 
 			UserEntityManager entityManager = new UserEntityManager();
 			boolean status = entityManager.deleteUser(username);
