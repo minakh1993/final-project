@@ -3,6 +3,7 @@ package EntityManager;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,6 +28,23 @@ public class EventEntityManager {
 		t.commit();
 		session.close();
 
+	}
+	
+	public List<Event> showAllEvents(){
+		try{
+		Session session=factory.openSession();
+		Transaction t=session.beginTransaction();
+		
+		List<Event> list=(List<Event>)session.createQuery("from Event").list();
+		t.commit();
+		
+		session.close();
+		
+		return list;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

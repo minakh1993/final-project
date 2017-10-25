@@ -11,6 +11,8 @@ import POJO.User;
 import RequestResponseManager.UpdateUserRequestResponseManager;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -89,7 +91,13 @@ public class EditUser extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println(roleComboBox.getSelectedIndex());
 				UpdateUserRequestResponseManager urrm=new UpdateUserRequestResponseManager();
-				urrm.updateUser(new User(usernameTextField.getText(), user.getPassword(),nameTextField.getText(), familyTextField.getText(),(String)roleComboBox.getSelectedItem(), roleComboBox.getSelectedIndex()));
+				boolean status=urrm.updateUser(new User(usernameTextField.getText(), user.getPassword(),nameTextField.getText(), familyTextField.getText(),(String)roleComboBox.getSelectedItem(), 3-roleComboBox.getSelectedIndex()));
+
+				if(status){
+					JOptionPane.showMessageDialog(contentPane, "updated successfully");
+				}else{
+					JOptionPane.showMessageDialog(contentPane, "failed");
+				}
 			}
 		});
 		btnUpdate.setFont(new Font("Times New Roman", Font.PLAIN, 32));

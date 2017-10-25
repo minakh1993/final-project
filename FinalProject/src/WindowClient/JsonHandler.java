@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.reflect.*;
 
+import POJO.Event;
 import POJO.PhoneRecord;
 import POJO.User;
 import jersey.repackaged.org.objectweb.asm.TypeReference;
@@ -45,6 +46,13 @@ public class JsonHandler {
 		Gson gson=new Gson();
 		Type type = new TypeToken<List<User>>(){}.getType();
 		List<User> list =gson.fromJson(input,type);
+		return list;
+	}
+	
+	public List<Event> JsonToEventList(String input) {
+		Gson gson=new Gson();
+		Type type = new TypeToken<List<Event>>(){}.getType();
+		List<Event> list =gson.fromJson(input,type);
 		return list;
 	}
 

@@ -19,19 +19,19 @@ public class User implements Serializable{
 	@Column(name="username", nullable=false , length=20)
 	private String username;
 
-	@Column(name="password", nullable=false, length=100)
+	@Column(name="password",  length=100)
 	private String password;
 
-	@Column(name="name", nullable=false , length=30)
+	@Column(name="name",  length=30)
 	private String name;
 
-	@Column(name="family", nullable=false, length=50)
+	@Column(name="family",  length=50)
 	private String family;
 
-	@Column(name="role", nullable=false, length=50)
+	@Column(name="role",  length=50)
 	private String role="user";
 
-	@Column(name="accessLevel", nullable=false, length=4)
+	@Column(name="accessLevel", length=4)
 	private int accessLevel=3; //default value
 
 	public User(String username, String password, String name, String family, String role, int accessLevel) {

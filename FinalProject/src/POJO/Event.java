@@ -6,10 +6,14 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 @Table(name="event")
@@ -19,7 +23,8 @@ public class Event implements Serializable{
 	@Column(name="code", nullable=false)
 	private int code;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@NotFound( action=NotFoundAction.IGNORE)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinColumn(name = "user")
 	private User user;
 	

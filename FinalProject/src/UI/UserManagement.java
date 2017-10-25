@@ -48,7 +48,7 @@ public class UserManagement extends JFrame {
 	public UserManagement() {
 		setTitle("user management");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 922, 672);
+		setBounds(100, 100, 922, 769);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -130,6 +130,18 @@ public class UserManagement extends JFrame {
 		btnDelete.setFont(new Font("Times New Roman", Font.PLAIN, 32));
 		btnDelete.setBounds(163, 515, 171, 41);
 		contentPane.add(btnDelete);
+		
+		JButton btnBack = new JButton("back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ClientAccessPanel.getPanel().setVisible(true);
+				dispose();
+				
+			}
+		});
+		btnBack.setFont(new Font("Times New Roman", Font.PLAIN, 32));
+		btnBack.setBounds(163, 612, 171, 41);
+		contentPane.add(btnBack);
 
 	}
 }
